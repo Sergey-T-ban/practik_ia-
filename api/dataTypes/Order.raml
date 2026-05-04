@@ -1,0 +1,12 @@
+type: object
+properties:
+  id: integer
+  userId: integer
+  items:
+    type: array
+    items:
+      type: object
+      properties:
+        bookId: integer
+        quantity: integer
+required: [id, userId, items]

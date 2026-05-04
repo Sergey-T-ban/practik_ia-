@@ -1,0 +1,58 @@
+#%RAML 1.0
+title: Book Store API
+version: v1
+baseUri: http://localhost:8080/api
+
+types:
+  User: !include dataTypes/User.raml
+  Book: !include dataTypes/Book.raml
+  Order: !include dataTypes/Order.raml
+  ErrorResponse: !include dataTypes/ErrorResponse.raml
+
+securitySchemes:
+  oauth_2_0: !include securitySchemes/oauth2.raml
+
+/users:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/user-example.json
+
+  post:
+    body:
+      application/json:
+        type: User
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include examples/user-example.json
+
+/books:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Book[]
+
+/orders:
+  securedBy: [ oauth_2_0 ]
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Order[]
+
+  post:
+    body:
+      application/json:
+        type: Order
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include examples/order-example.json
